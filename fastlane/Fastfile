@@ -1,0 +1,106 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do 
+  desc "Description of what the lane does"
+  lane :dev do |options|
+        icon_mask(t: "test", v: options[:v], n: options[:n])
+	gym(
+            workspace: "Weplate.xcworkspace",
+            scheme: "Weplate",
+            clean: true,
+            output_directory: "./output",
+            output_name: "MVMaker",
+            configuration: "Debug",
+            silent: true,
+            export_method: "development",
+ 	    export_options: {
+               method: "development",
+               provisioningProfiles: { 
+                  "com.ideafrom.video.editor.mvmaker.test" => "mv-maker_dev"
+               }
+            },
+	    export_xcargs: "-allowProvisioningUpdates",
+            xcargs: "ASSETCATALOG_COMPILER_APPICON_NAME=A_AppIcon-Versioned",
+	    suppress_xcode_output: true
+        )
+        fir
+  end
+
+  lane :adhoc do |options|
+        icon_mask(t: "beta", v: options[:v], n: options[:n])
+	gym(
+            workspace: "Weplate.xcworkspace",
+            scheme: "Weplate",
+            clean: true,
+            output_directory: "./output",
+            output_name: "MVMaker",
+            configuration: "Release",
+            silent: true,
+            export_method: "ad-hoc",
+ 	    export_options: {
+               method: "ad-hoc",
+               provisioningProfiles: { 
+                  "com.ideafrom.video.editor.mvmaker" => "mv-maker_adhoc"
+               }
+            },
+	    export_xcargs: "-allowProvisioningUpdates",
+            xcargs: "ASSETCATALOG_COMPILER_APPICON_NAME=A_AppIcon-Versioned",
+	    suppress_xcode_output: true
+        )
+       fir
+  end
+   
+  lane :appconnect do
+	gym(
+            workspace: "Weplate.xcworkspace",
+            scheme: "Weplate",
+            clean: true,
+            output_directory: "./output",
+            output_name: "MVMaker",
+            configuration: "Release",
+            silent: true,
+            export_method: "app-store",
+ 	    export_options: {
+               method: "app-store",
+               provisioningProfiles: { 
+                  "com.ideafrom.video.editor.mvmaker" => "mv-maker_appstore"
+               }
+            },
+	    export_xcargs: "-allowProvisioningUpdates",
+	    suppress_xcode_output: true
+        )
+         
+  end
+
+  lane :icon_mask do |options|
+      version_icon(
+    	appiconset_path: "./Weplate/Assets.xcassets/A_AppIcon.appiconset",
+    	text: "#{options[:t]} #{options[:v]}(#{options[:n]})"
+  )
+   end
+  
+
+    lane :fir do
+       fir_cli api_token: "569d558f37ab7e2feb06bd245ae95e54", 
+               specify_file_path: "./output/MVMaker.ipa", 
+           specify_icon_file: "./Weplate/Assets.xcassets/A_AppIcon-Versioned.appiconset",        
+           changelog: "upload to fir success!"
+  end
+ 
+
+end
