@@ -39,17 +39,17 @@ bundle update
 
 * fir-cli
 
-      ```swift
-//install plugin
-bundle exec fastlane add_plugin fir-cli
-//use as fastlane
-lane :fir do
-       fir_cli api_token: "fir-token", 
-               specify_file_path: "path/to/appName.ipa", //需要上传的app.ipa文件位置
-           specify_icon_file: "./projectName/Assets.xcassets/A_AppIcon-Versioned.appiconset", //需要上传的appicon文件位置（这里我使用的是上面的插件生成的appicon，如果不需要，则直接删除改参数）
-           changelog: "upload to fir success!"
-end
-      ```
+  ```swift
+	//install plugin
+	bundle exec fastlane add_plugin fir-cli
+	//use as fastlane
+	lane :fir do
+	       fir_cli api_token: "fir-token", 
+		       specify_file_path: "path/to/appName.ipa", //需要上传的app.ipa文件位置
+		   specify_icon_file: "./projectName/Assets.xcassets/A_AppIcon-Versioned.appiconset", //需要上传的appicon文件位置（这里我使用的是上面的插件生成的appicon，如果不需要，则直接删除改参数）
+		   changelog: "upload to fir success!"
+	end
+   ```
 
 ### 4  Archive
 
