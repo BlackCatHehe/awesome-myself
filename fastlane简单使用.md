@@ -39,7 +39,7 @@ end
 
 * fir-cli
 
-      ```swift
+```swift
 //install plugin
 bundle exec fastlane add_plugin fir-cli
 //use as fastlane
