@@ -49,7 +49,7 @@ lane :fir do
            specify_icon_file: "./projectName/Assets.xcassets/A_AppIcon-Versioned.appiconset", //需要上传的appicon文件位置（这里我使用的是上面的插件生成的appicon，如果不需要，则直接删除改参数）
            changelog: "upload to fir success!"
 end
-      ```
+```
 
 ### 4  Archive
 
