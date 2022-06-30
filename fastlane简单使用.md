@@ -22,7 +22,7 @@ bundle update
 
 * fastlane-plugin-icon_versioning(generate mask text for your appicon)
 
-  ```swift
+```swift
   //basic 
   brew install ImageMagick
   //install plugin
