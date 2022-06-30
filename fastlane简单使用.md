@@ -23,19 +23,19 @@ bundle update
 * fastlane-plugin-icon_versioning(generate mask text for your appicon)
 
 ```swift
-  //basic 
-  brew install ImageMagick
-  //install plugin
-  bundle exec fastlane add_plugin fastlane-plugin-icon_versioning
-  //use as fastlane
-  lane :icon_mask do |options|
-        version_icon(
-      	appiconset_path: "./projectName/Assets.xcassets/AppIcon.appiconset",
-      	text: "#{options[:t]} #{options[:v]}(#{options[:n]})"
-    )
-  end
-  //then your can find a named "A_AppIcon-Versioned" file in your project
-  ```
+//basic 
+brew install ImageMagick
+//install plugin
+bundle exec fastlane add_plugin fastlane-plugin-icon_versioning
+//use as fastlane
+lane :icon_mask do |options|
+version_icon(
+appiconset_path: "./projectName/Assets.xcassets/AppIcon.appiconset",
+text: "#{options[:t]} #{options[:v]}(#{options[:n]})"
+)
+end
+//then your can find a named "A_AppIcon-Versioned" file in your project
+```
 
 * fir-cli
 
