@@ -85,6 +85,83 @@ lane :dev do |options|
   end
 ```
 
+项目示例：
+```swift
+
+default_platform(:ios)
+
+lane :icon_mask do |options|
+  add_badge(dark:true, shield: options[:v]+"-"+options[:n]+"-blue", alpha: true, no_badge: !options[:isDebug])
+end
+
+lane :fir do
+  fir_cli api_token: "d367184238fd8127aa9f12547a84445e", 
+  specify_file_path: "./output/NovelFeed.ipa", 
+  specify_icon_file: "./projectName/Assets.xcassets/A_AppIcon-Versioned.appiconset", 
+    changelog: "upload to fir success!"
+end
+
+
+#测试环境，可根据需求修改环境
+  lane :dev do |options|
+		#generate new appicon if needed, if not nedd, delete
+        icon_mask(isDebug: true, v: options[:v], n: options[:n])
+    #gym build your project
+	    gym(
+            workspace: "WXReader.xcworkspace",
+            scheme: "WXReader",
+            clean: true,
+            output_directory: "./output",
+            output_name: "NovelFeed",
+            configuration: "Debug",
+            silent: true,
+            export_method: "development",
+ 	          export_options: {
+               method: "development", #导出模式development, ad-hoc, app-store
+               provisioningProfiles: { 
+                  "com.novelgo.inovel" => "NovelFeed"
+                 #bundleid => profileName
+               }
+            },
+	    export_xcargs: "-allowProvisioningUpdates",
+    				#打包需要的appicon,如果不需要更换则删除
+            xcargs: "ASSETCATALOG_COMPILER_APPICON_NAME=AppIcon-debug",
+	    suppress_xcode_output: true
+        )
+	#使用上面的fir-cli插件上传到fir
+        fir
+  end
+
+  #adhoc环境，可根据需求修改环境
+lane :adhoc do |options|
+		#generate new appicon if needed, if not nedd, delete
+        icon_mask(t: "Adhoc", v: options[:v], n: options[:n])
+    #gym build your project
+	    gym(
+            workspace: "WXReader.xcworkspace",
+            scheme: "WXReader",
+            clean: true,
+            output_directory: "./output",
+            output_name: "NovelFeed",
+            configuration: "Debug",
+            silent: true,
+            export_method: "adhoc",
+ 	          export_options: {
+               method: "adhoc", #导出模式development, ad-hoc, app-store
+               provisioningProfiles: { 
+                  "com.novelgo.inovel" => "NovelFeed"
+                 #bundleid => profileName
+               }
+            },
+	    export_xcargs: "-allowProvisioningUpdates",
+    				#打包需要的appicon,如果不需要更换则删除
+            # xcargs: "ASSETCATALOG_COMPILER_APPICON_NAME=A_AppIcon-Versioned",
+	    suppress_xcode_output: true
+        )
+	#使用上面的fir-cli插件上传到fir
+        fir
+  end
+```
 
 
 ### 5. urls
